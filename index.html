@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>RPMS - Pre Approval Users </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+   
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="style.css" rel="stylesheet">
+
+
+    <script src="https://kit.fontawesome.com/458663dc17.js" crossorigin="anonymous"></script>
+
+
+
+
+
+    <link rel="stylesheet" href="style.css">
+
+
+
+<style>
+    body{
+        background-color: black;
+    }
+   
+    #design{
+        border: 3px solid white;
+        width: fit-content;
+        border-radius: 4px;
+        box-shadow: 8px 6px 8px #92ed93;
+        padding: 30px;
+        margin-right: 34%;
+        margin-left: 34%;
+        margin-top: 10%;
+        /* margin-bottom: 23%; */
+        align-items: center;
+    }
+    
+
+    input{
+        margin: 8%;
+        border: 1px solid white;
+        border-radius: 5px;
+        height: 38px;
+    }
+    #new{
+        margin-bottom: 10%;
+        margin-left: 2%;
+    }
+    button{
+        background-color: #92ed93;
+        color: black;
+        border-radius: 6px;
+        height: 50px;
+        font-weight: bolder;
+    }
+</style>
+
+    
+</head>
+
+<body>
+   
+
+            <!-- form starts -->
+
+<div id="design">
+
+
+            <div id="display">
+                <form name="google-sheet" method="post">
+                    <input type="text" id="name"  name="username" placeholder="Enter Teacher's name" required> <br>
+                    <input type="text"  id="reason" placeholder="reason" required> <br>
+                    <input type="datetime-local" name="Flat no" id="tim" placeholder="Datetime" required> <br>
+                    
+                    <input type="text" name="password" id="CID" readonly placeholder="Auto Generated User ID">
+                </form>
+                
+                <button onclick="AddUser()">I authorise this person to Enter</button>
+            </div>
+            <br><div id="new">
+                
+            </div>
+            <!-- <div id="data-to-share">This is the data that will be shared on WhatsApp</div> -->
+
+
+            <button onclick="shareOnWhatsApp()">Share on WhatsApp</button>
+            <button onclick="shareViaSMS()">Share via SMS</button>
+            <button onclick="shareViaEmail()">Share via Email</button>
+
+
+
+
+
+
+          
+
+            
+            <br>
+        </div> 
+        <br><br><br>  
+
+        
+
+                <script>
+                    function getRndInteger(min, max) {
+                      return Math.floor(Math.random() * (max - min)) + min;
+                    }
+                    function AddUser() {
+                    
+                        var randval = getRndInteger(100000,1000000);
+                        document.getElementById('CID').value = 'MG/'+randval;
+                        var nameu = document.getElementById('name').value;
+                        var time = document.getElementById('tim').value;
+                        var reason = document.getElementById('reason').value;
+
+                    
+                        // document.getElementById('demo').innerHTML = randval;
+                    
+                        // document.getElementById('result').innerHTML = '<span class="result">' + qrCodeMessage + '</span>';
+                        // document.getElementById('name').value = qrCodeMessage;
+                    
+                        const scriptURL = 'https://script.google.com/macros/s/AKfycbxIPkGK9P_KaEe6jSBfBu7lTRqU3tlLAkGos8bYnAJmr1hkkJwDQCHft-OtMIfLsGc/exec'
+                        // const scriptURL2 = 'https://script.google.com/macros/s/AKfycbxTfvtSfT7oTlZkH2GhVBvcHiVh7cMqjlFruf55xnB1VXubXN0FSGV3Nji5yQNe3D8Mdg/exec'
+                    
+                        const form = document.forms['google-sheet']
+                    
+                        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                          .then(response => (console.log("pass")))
+                          .catch(error => (console.log("fail")))
+                    
+                        // fetch(scriptURL2, { method: 'POST', body: new FormData(form) })
+                    
+                        //   .then(response => $("#form_alerts").html("<div> Checkin successfully.</div></br>"))
+                        //   .catch(error => $("#form_alerts").html("<div>Checkin not recorded.</div></br>"))
+                    
+            
+                        document.getElementById("display").style.display = "none";
+                        document.getElementById("new").innerHTML="Appointment is fixed with Mr/Ms/Mrs  "+ " - " + nameu + " to discuss regarding " + reason + " unique meeting ID is : " 
+                        + randval + "  at " + time ;
+                    //   document.getElementById("new").innerHTML=""
+                    }
+                    </script>
+
+<script>
+    function shareOnWhatsApp() {
+        var data = document.getElementById("new").innerHTML;
+        var whatsappURL = "https://api.whatsapp.com/send?text=" + encodeURIComponent(data);
+        window.open(whatsappURL, "_blank");
+    }
+    </script>
+
+<script>
+    function shareViaSMS() {
+        var data = document.getElementById("new").innerHTML;
+        var smsURL = "sms:?body=" + encodeURIComponent(data);
+        window.location.href = smsURL;
+    }
+    </script>
+
+<script>
+    function shareViaEmail() {
+        var data = document.getElementById("new").innerHTML;
+        var emailURL = "mailto:?body=" + encodeURIComponent(data);
+        window.location.href = emailURL;
+    }
+    </script>
+
+
+
+
+
+
+
+       
+
+            
+            <!-- form ends -->
+
+
+
+         
+
+
+            <!-- Footer Start -->
+            <!-- <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="https://symbiosistechnologies.co.in/">Symbiosis Technology Services Pvt Ltd</a>, All Right Reserved.
+                        </div>
+                       
+                    </div>
+                </div>
+            </div> -->
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" style="background-color: #20e3f0;"><i class="bi bi-arrow-up"></i></a>
+    </div> -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script>
+        var dt = new Date();
+        document.getElementById('date-time').innerHTML=dt;
+        </script>
+
+
+
+
+<div class="main_box">
+
+</body>
+
+
+
+
+</html>
+
+
+
+
