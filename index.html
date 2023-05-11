@@ -133,7 +133,8 @@
                         var randval = getRndInteger(100000,1000000);
                         document.getElementById('CID').value = 'MG/'+randval;
                         var nameu = document.getElementById('name').value;
-                        var time = document.getElementById('tim').value;
+                        var datee = document.getElementById('tim2').value;
+                        var timee = document.getElementById('tim1').value;
                         var reason = document.getElementById('reason').value;
 
                     
@@ -159,7 +160,7 @@
             
                         document.getElementById("display").style.display = "none";
                         document.getElementById("new").innerHTML="Appointment is fixed with the Teacher Mr/Ms/Mrs  "+ " - " + nameu + " to discuss regarding " + reason +"."+ "Please find the"+ " unique meeting ID is : " 
-                        + randval + "  on " + time ;
+                        + randval + "  on " + datee + "at"+ timee ;
                     //   document.getElementById("new").innerHTML=""
                     }
                     </script>
